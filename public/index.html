@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Velocis Software Solutions</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="main.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- navbar -->
+    <nav class="hero-body">
+      <!-- Logo at navbar -->
+      <div class="nav-container">
+        <div class="logo-container">
+          <img src="VelocisImage.png" />
+        </div>
+        <!-- 
+        Logout Button -->
+        <div class="topnav" id="myTopnav">
+          <a href="LandPage.html" class="active">Logout</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="section">
+      <div class="columns">
+        <div class="column"></div>
+        <div class="column">
+          <div id="pacer" style="display: none">
+            <span></span>
+
+            <!-- progress bar  -->
+
+            <div class="loading">
+              <div class="text"></div>
+              <label class="percent"></label>
+              <div class="progress-bar">
+                <div class="progress"></div>
+              </div>
+            </div>
+          </div>
+          <div id="main">
+            <p>Let's start by selecting a file to process:</p>
+
+            <div class="box">
+              <form
+                id="app-login"
+                method="post"
+                action="/process"
+                onsubmit="return processForm(this);"
+              >
+                <input id="fileId" type="hidden" name="fileId" />
+
+                <div class="field">
+                  <div class="file is-boxed is-success has-name">
+                    <label class="file-label">
+                      <input
+                        class="file-input"
+                        type="file"
+                        id="file"
+                        name="file"
+                      />
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fa fa-upload"></i>
+                        </span>
+                        <span class="file-label"> Upload file </span> </span
+                      ><span id="file-name"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="field is-grouped">
+                  <div class="control">
+                    <button
+                      class="button is-primary upload-button"
+                      onclick="updateList()"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  <div class="control">
+                    <button class="button is-text">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="column"></div>
+      </div>
+    </section>
+    <section class="display_file_section"></section>
+    <div id="fileList"></div>
+    <script>
+      $("input#file").on("change", function () {
+        console.log(this);
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          console.log(reader.result + "->" + typeof reader.result);
+          var thisImage = reader.result;
+          localStorage.setItem("imgData", thisImage);
+        };
+        reader.readAsDataURL(this.files[0]);
+      });
+
+      $(".upload-button").click(function () {
+        var dataImage = localStorage.getItem("imgData");
+        console.log(dataImage);
+        /*var imgCtr = $('<img/>').prop('src', dataImage);
+        $('div#imgContainer').append(imgCtr); */
+      });
+
+      const file = document.getElementById("file");
+      file.onchange = function () {
+        if (file.files.length > 0) {
+          document.getElementById("file-name").innerHTML = file.files[0].name;
+        }
+      };
+
+      updateList = function () {
+        var input = document.getElementById("file");
+        var output = document.getElementById("fileList");
+        var children = "";
+        for (var i = 0; i < input.files.length; ++i) {
+          children += "<li>" + input.files.item(i).name + "</li>";
+        }
+        output.innerHTML = "<ul>" + children + "</ul>";
+      };
+    </script>
+  </body>
+</html>

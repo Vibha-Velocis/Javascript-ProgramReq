@@ -1,0 +1,7 @@
+A small amount of javascript is used to intercept the submit event of the form and then:
+
+1. Create a one-time authentication token using Auth Token API
+
+2. Use that one-time API authentication token to submit the file to API for processing/identification using our File API
+
+3. Based upon our File API response we will either submit the form to the server (including the identifier of the File API) or notify the user of the content findings  whether it is malicious or not.
